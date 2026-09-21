@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <meta
+    name="description"
+    content="Todolino App - A simple task management application."
+  />
+  <title>Todolino App</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">✓</div>
+        <div>
+          <h1>Todolino App</h1>
+          <p>Manage your tasks efficiently</p>
+        </div>
+      </div>
+
+      <button
+        class="add-task-button"
+        id="addTaskButton"
+        type="button"
+        aria-label="Add a new task"
+      >
+        <span aria-hidden="true">+</span>
+        Add task
+      </button>
+    </header>
+
+    <main class="board" id="board">
+      <section
+        class="column"
+        data-status="todo"
+        aria-labelledby="todoTitle"
+      >
+        <div class="column-header">
+          <div class="column-title-wrapper">
+            <span class="status-dot todo-dot"></span>
+            <h2 id="todoTitle">Todo</h2>
+          </div>
+
+          <span class="task-count" data-count="todo">0</span>
+        </div>
+
+        <div
+          class="task-list"
+          data-task-list="todo"
+          role="list"
+          aria-label="Todo tasks"
+        ></div>
+
+        <div class="empty-state">
+          <span aria-hidden="true">✓</span>
+          <p>No tasks here</p>
+        </div>
+      </section>
+
+      <section
+        class="column"
+        data-status="in_progress"
+        aria-labelledby="progressTitle"
+      >
+        <div class="column-header">
+          <div class="column-title-wrapper">
+            <span class="status-dot progress-dot"></span>
+            <h2 id="progressTitle">In Progress</h2>
+          </div>
+
+          <span class="task-count" data-count="in_progress">0</span>
+        </div>
+
+        <div
+          class="task-list"
+          data-task-list="in_progress"
+          role="list"
+          aria-label="In Progress tasks"
+        ></div>
+
+        <div class="empty-state">
+          <span aria-hidden="true">↔</span>
+          <p>No tasks here</p>
+        </div>
+      </section>
+
+      <section
+        class="column"
+        data-status="done"
+        aria-labelledby="doneTitle"
+      >
+        <div class="column-header">
+          <div class="column-title-wrapper">
+            <span class="status-dot done-dot"></span>
+            <h2 id="doneTitle">Done</h2>
+          </div>
+
+          <span class="task-count" data-count="done">0</span>
+        </div>
+
+        <div
+          class="task-list"
+          data-task-list="done"
+          role="list"
+          aria-label="Completed tasks"
+        ></div>
+
+        <div class="empty-state">
+          <span aria-hidden="true">✓</span>
+          <p>No tasks here</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div
+    class="modal"
+    id="taskModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-overlay" data-close-modal></div>
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 id="modalTitle">Create a task</h2>
+          <p>Add a new task to your board.</p>
+        </div>
+
+        <button
+          class="modal-close"
+          id="closeModalButton"
+          type="button"
+          aria-label="Close modal"
+        >
+          &times;
+        </button>
+      </div>
+
+      <form id="taskForm" novalidate>
+        <div class="form-group">
+          <label for="taskTitle">Title</label>
+          <input
+            id="taskTitle"
+            name="title"
+            type="text"
+            placeholder="e.g. Build landing page"
+            maxlength="100"
+            autocomplete="off"
+            required
+          />
+          <span class="field-error" id="titleError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="taskDescription">
+            Description
+            <span class="optional">(optional)</span>
+          </label>
+
+          <textarea
+            id="taskDescription"
+            name="description"
+            placeholder="Add some details about this task..."
+            maxlength="500"
+            rows="5"
+          ></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button
+            class="cancel-button"
+            type="button"
+            id="cancelTaskButton"
+          >
+            Cancel
+          </button>
+
+          <button class="submit-button" type="submit">
+            Create task
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <template id="taskTemplate">
+    <article class="task-card" draggable="true" role="listitem">
+      <div class="task-card-header">
+        <span class="task-status-label"></span>
+
+        <div class="task-actions">
+          <button
+            class="task-action edit-task"
+            type="button"
+            aria-label="Edit task"
+            title="Edit task"
+          >
+            ✎
+          </button>
+
+          <button
+            class="task-action delete-task"
+            type="button"
+            aria-label="Delete task"
+            title="Delete task"
+          >
+            ×
+          </button>
+        </div>
+      </div>
+
+      <h3 class="task-title"></h3>
+      <p class="task-description"></p>
+
+      <div class="task-footer">
+        <time class="task-date"></time>
+        <span class="drag-hint" aria-hidden="true">⠿</span>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
