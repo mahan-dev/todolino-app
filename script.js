@@ -27,6 +27,9 @@
     taskDescription: document.querySelector("#taskDescription"),
     titleError: document.querySelector("#titleError"),
     taskTemplate: document.querySelector("#taskTemplate"),
+    // New elements for the sidebar
+    toggleSidebarButton: document.querySelector("#toggleSidebarButton"),
+    sidebar: document.querySelector("#sidebar"),
   };
 
   const state = {
@@ -543,16 +546,21 @@
       }
     });
 
-    /*
-     * Event delegation:
-     * One listener handles actions for all current/future task cards.
-     */
+    // Sidebar toggle
+    if (dom.toggleSidebarButton && dom.sidebar) {
+      // Initialize ARIA attribute
+      dom.toggleSidebarButton.setAttribute("aria-expanded", "true");
+      dom.toggleSidebarButton.addEventListener("click", () => {
+        dom.sidebar.classList.toggle("collapsed");
+        const expanded = !dom.sidebar.classList.contains("collapsed");
+        dom.toggleSidebarButton.setAttribute("aria-expanded", expanded);
+      });
+    }
+
+    // Task card actions (edit / delete) – delegated
     dom.board.addEventListener("click", handleTaskAction);
 
-    /*
-     * Drag events are delegated to the board.
-     * This avoids adding multiple listeners to every task card.
-     */
+    // Drag‑and‑drop – delegated
     dom.board.addEventListener("dragstart", handleDragStart);
     dom.board.addEventListener("dragend", handleDragEnd);
     dom.board.addEventListener("dragover", handleDragOver);
