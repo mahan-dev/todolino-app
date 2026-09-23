@@ -2,6 +2,7 @@
   "use strict";
 
   const STORAGE_KEY = "todolino_tasks";
+  const THEME_KEY = "todolino_theme";
 
   const STATUS = Object.freeze({
     TODO: "todo",
@@ -30,6 +31,9 @@
     // New elements for the sidebar
     toggleSidebarButton: document.querySelector("#toggleSidebarButton"),
     sidebar: document.querySelector("#sidebar"),
+    // Theme toggle
+    themeToggle: document.querySelector("#themeToggle"),
+    themeIcon: document.querySelector(".theme-icon"),
   };
 
   const state = {
@@ -510,6 +514,34 @@
   }
 
   // -----------------------------------------
+  // Theme
+  // -----------------------------------------
+
+  function applyTheme(isDark) {
+    if (isDark) {
+      document.body.classList.add("dark-theme");
+      if (dom.themeIcon) dom.themeIcon.textContent = "☀️";
+    } else {
+      document.body.classList.remove("dark-theme");
+      if (dom.themeIcon) dom.themeIcon.textContent = "🌙";
+    }
+  }
+
+  function initTheme() {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    const isDark = savedTheme ? savedTheme === "dark" : prefersDark;
+    applyTheme(isDark);
+  }
+
+  function toggleTheme() {
+    const isDark = document.body.classList.toggle("dark-theme");
+    if (dom.themeIcon) dom.themeIcon.textContent = isDark ? "☀️" : "🌙";
+    localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+  }
+
+  // -----------------------------------------
   // Event listeners
   // -----------------------------------------
 
@@ -557,6 +589,11 @@
       });
     }
 
+    // Theme toggle
+    if (dom.themeToggle) {
+      dom.themeToggle.addEventListener("click", toggleTheme);
+    }
+
     // Task card actions (edit / delete) – delegated
     dom.board.addEventListener("click", handleTaskAction);
 
@@ -573,6 +610,7 @@
   // -----------------------------------------
 
   function init() {
+    initTheme();
     state.tasks = storage.load();
 
     setupEventListeners();

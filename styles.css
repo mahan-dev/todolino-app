@@ -18,6 +18,25 @@
   --radius: 12px;
 }
 
+body.dark-theme {
+  --background: #111827;
+  --surface: #1f2937;
+  --surface-hover: #374151;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --border: #374151;
+  --primary: #635bff;
+  --primary-dark: #5048e5;
+  --danger: #ef4444;
+  --danger-light: #450a0a;
+  --todo: #94a3b8;
+  --progress: #fbbf24;
+  --done: #34d399;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -36,6 +55,7 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button,
@@ -87,6 +107,7 @@ textarea:focus-visible {
   font-size: 22px;
   font-weight: 800;
   box-shadow: var(--shadow-md);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .brand h1 {
@@ -99,6 +120,29 @@ textarea:focus-visible {
   margin-top: 4px;
   color: var(--text-secondary);
   font-size: 13px;
+  transition: color 0.3s ease;
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 150ms ease;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-hover);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
 }
 
 .add-task-button {
@@ -152,8 +196,17 @@ textarea:focus-visible {
     border-color 180ms ease;
 }
 
+body.dark-theme .column {
+  background: #111827;
+}
+
 .column.drag-over {
   background: #e8eaff;
+  border-color: rgba(99, 91, 255, 0.35);
+}
+
+body.dark-theme .column.drag-over {
+  background: #1e293b;
   border-color: rgba(99, 91, 255, 0.35);
 }
 
@@ -205,6 +258,11 @@ textarea:focus-visible {
   color: var(--text-secondary);
   font-size: 12px;
   font-weight: 700;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-theme .task-count {
+  background: #374151;
 }
 
 .task-list {
@@ -227,13 +285,18 @@ textarea:focus-visible {
     transform 180ms ease,
     box-shadow 180ms ease,
     opacity 180ms ease,
-    border-color 180ms ease;
+    border-color 180ms ease,
+    background-color 0.3s ease;
 }
 
 .task-card:hover {
   border-color: #d5d9e2;
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+}
+
+body.dark-theme .task-card:hover {
+  border-color: #4b5563;
 }
 
 .task-card:active {
@@ -263,6 +326,11 @@ textarea:focus-visible {
   font-weight: 750;
   letter-spacing: 0.4px;
   text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-theme .task-status-label {
+  background: #334155;
 }
 
 .task-card[data-status="in_progress"] .task-status-label {
@@ -270,9 +338,19 @@ textarea:focus-visible {
   color: #d97706;
 }
 
+body.dark-theme .task-card[data-status="in_progress"] .task-status-label {
+  background: #422006;
+  color: #fbbf24;
+}
+
 .task-card[data-status="done"] .task-status-label {
   background: #ecfdf5;
   color: #059669;
+}
+
+body.dark-theme .task-card[data-status="done"] .task-status-label {
+  background: #022c22;
+  color: #34d399;
 }
 
 .task-actions {
@@ -300,6 +378,10 @@ textarea:focus-visible {
   color: var(--text-primary);
 }
 
+body.dark-theme .task-action:hover {
+  background: #374151;
+}
+
 .delete-task:hover {
   background: var(--danger-light);
   color: var(--danger);
@@ -321,6 +403,7 @@ textarea:focus-visible {
   line-height: 1.55;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  transition: color 0.3s ease;
 }
 
 .task-footer {
@@ -331,6 +414,11 @@ textarea:focus-visible {
   margin-top: 14px;
   padding-top: 11px;
   border-top: 1px solid #f0f1f4;
+  transition: border-color 0.3s ease;
+}
+
+body.dark-theme .task-footer {
+  border-top: 1px solid #374151;
 }
 
 .task-date {
@@ -402,7 +490,12 @@ textarea:focus-visible {
   background: white;
   box-shadow: var(--shadow-lg);
   transform: translateY(10px) scale(0.98);
-  transition: transform 180ms ease;
+  transition: transform 180ms ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-theme .modal-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
 }
 
 .modal.is-open .modal-content {
@@ -442,9 +535,18 @@ textarea:focus-visible {
     color 150ms ease;
 }
 
+body.dark-theme .modal-close {
+  background: #374151;
+  color: #9ca3af;
+}
+
 .modal-close:hover {
   background: #e9ebef;
   color: var(--text-primary);
+}
+
+body.dark-theme .modal-close:hover {
+  background: #4b5563;
 }
 
 .form-group {
@@ -474,7 +576,14 @@ textarea:focus-visible {
   color: var(--text-primary);
   transition:
     border-color 150ms ease,
-    box-shadow 150ms ease;
+    box-shadow 150ms ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+body.dark-theme .form-group input,
+body.dark-theme .form-group textarea {
+  background: #111827;
 }
 
 .form-group input {
@@ -530,8 +639,17 @@ textarea:focus-visible {
   color: #4b5563;
 }
 
+body.dark-theme .cancel-button {
+  background: #374151;
+  color: #d1d5db;
+}
+
 .cancel-button:hover {
   background: #e7e9ed;
+}
+
+body.dark-theme .cancel-button:hover {
+  background: #4b5563;
 }
 
 .submit-button {
