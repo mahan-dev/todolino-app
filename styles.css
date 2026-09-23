@@ -90,6 +90,12 @@ textarea:focus-visible {
   margin: 0 auto 32px;
 }
 
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -133,16 +139,25 @@ textarea:focus-visible {
   border: 1px solid var(--border);
   color: var(--text-primary);
   font-size: 18px;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 150ms ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-icon {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .theme-toggle:hover {
   background: var(--surface-hover);
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.05);
+}
+
+.theme-toggle:hover .theme-icon {
+  transform: rotate(15deg);
 }
 
 .theme-toggle:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.95);
 }
 
 .add-task-button {
@@ -192,8 +207,8 @@ textarea:focus-visible {
   border-radius: 16px;
   background: #eef1f6;
   transition:
-    background 180ms ease,
-    border-color 180ms ease;
+    background 0.3s ease,
+    border-color 0.3s ease;
 }
 
 body.dark-theme .column {
@@ -285,7 +300,7 @@ body.dark-theme .task-count {
     transform 180ms ease,
     box-shadow 180ms ease,
     opacity 180ms ease,
-    border-color 180ms ease,
+    border-color 0.3s ease,
     background-color 0.3s ease;
 }
 
@@ -689,6 +704,11 @@ body.dark-theme .cancel-button:hover {
     align-items: flex-start;
     flex-direction: column;
     margin-bottom: 20px;
+  }
+
+  .brand-container {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .add-task-button {
